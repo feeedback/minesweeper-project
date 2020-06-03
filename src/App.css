@@ -13,23 +13,29 @@
     font-size: calc(10px + 1vmin);
     font-family: 'Roboto', sans-serif;
 }
+
 .message {
     line-height: 100%;
     margin-bottom: 5px;
 }
+
 .messageFlags, .messageWin, .messageLose {
     font-weight: bold;
 }
+
 .messageFlagsZero {
     color:#c82500;
 }
+
 .messageFlags {
     font-weight: bold;
 }
+
 .messageWin {
     color: #e76346;
     margin-left: 10px;
 }
+
 .messageLose {
     color: #a01d00;
     margin-left: 10px;
