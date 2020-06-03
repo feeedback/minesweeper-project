@@ -1,0 +1,162 @@
+:root {
+    --x: 9;
+    --y: 9;
+    --max-w: 40px;
+    --min-w: 20px;
+}
+
+.fieldContainer {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: grid;
+    grid-template-columns: repeat(
+        var(--x),
+        minmax(
+            var(--min-w),
+            min(
+                var(--max-w),
+                min(calc((85vw) / var(--x)), calc((96vh - 45px) / var(--y)))
+            )
+        )
+    );
+    grid-template-rows: repeat(
+        var(--y),
+        minmax(
+            var(--min-w),
+            min(
+                var(--max-w),
+                min(calc((85vw) / var(--x)), calc((96vh - 45px) / var(--y)))
+            )
+        )
+    );
+    justify-content: stretch;
+
+    background-color: #cecab7;
+    border: 4px solid #dfded9;
+    margin: 0px auto;
+    box-sizing: border-box;
+}
+
+.fieldContainer::before {
+    content: '';
+    width: 0;
+    padding-bottom: 100%;
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+    display: inline-block;
+}
+
+.fieldContainer > *:first-child {
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+}
+
+.Cell {
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+
+
+    font-size: calc(
+        (
+                (
+                        max(
+                            var(--min-w),
+                            min(
+                                var(--max-w),
+                                min(
+                                    calc((85vw) / var(--x)),
+                                    calc((96vh - 45px) / var(--y))
+                                )
+                            )
+                        )
+                    ) - 2px
+            ) * 0.75
+    );
+
+    font-family: 'Roboto Mono', monospace;
+    font-weight: bold;
+    line-height: 100%;
+    border: 1px solid;
+    border-color: #9e9e9d;
+    background-color: #cecab7;
+    color: black;
+    cursor: pointer;
+}
+.Cell:disabled {
+    -webkit-appearance: none;
+    cursor: auto;
+}
+
+.closed {
+    border: 2px solid;
+    border-color: #f5f3eb #bab7a9 #bab7a9 #fff9db;
+    background-color: #dcd6bc;
+}
+.flagged {
+    color: rgba(255, 0, 0, 0.8);
+    font-weight: normal;
+}
+
+.mine {
+    border: 1px solid;
+    border-color: #9e9e9d;
+    font-weight: normal;
+}
+
+.mineExplosion {
+    background-color: #ff00008a;
+}
+
+.flaggedWrong {
+    color: #b90000;
+    position: relative;
+    z-index: 1;
+}
+.flaggedWrong::before {
+    content: '💣';
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    margin: auto;
+    z-index: -1;
+    opacity: 40%;
+    font-size: 90%;
+    font-weight: normal;
+    line-height: 150%;
+}
+.empty {
+    cursor: auto;
+}
+.digit1 {
+    color: blue;
+}
+.digit2 {
+    color: green;
+}
+.digit3 {
+    color: red;
+}
+.digit4 {
+    color: darkblue;
+}
+.digit5 {
+    color: darkred;
+}
+.digit6 {
+    color: darkcyan;
+}
+.digit7 {
+    color: black;
+}
+.digit8 {
+    color: gray;
+}

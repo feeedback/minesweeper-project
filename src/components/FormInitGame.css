@@ -1,0 +1,26 @@
+.formInitGameSettings {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 10px 0 calc(10px + 1.1vmin) 0;
+    width: 100%;
+}
+.formInitGameSettings label,
+.fieldColumnsCount,
+.fieldRowsCount,
+.fieldMinesCount,
+.buttonStartGame {
+    font-size: calc(10px + 1vmin);
+    margin: 0 0.3em;
+}
+
+.fieldColumnsCount,
+.fieldRowsCount,
+.fieldMinesCount {
+    width: 3em;
+}
+
+.fieldMinesCount {
+    width: 4em;
+}
