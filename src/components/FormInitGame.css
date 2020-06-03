@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-    padding: 10px 0 calc(10px + 1.1vmin) 0;
+    padding: 4px 0 15px 0;
     width: 100%;
 }
 .formInitGameSettings label,
@@ -11,8 +11,11 @@
 .fieldRowsCount,
 .fieldMinesCount,
 .buttonStartGame {
-    font-size: calc(10px + 1vmin);
+    font-size: calc(10px + 0.8vmin);
     margin: 0 0.3em;
+    font-weight: normal;
+    color: #404040;
+    border-width: 1px;
 }
 
 .fieldColumnsCount,

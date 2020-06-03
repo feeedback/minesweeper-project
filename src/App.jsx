@@ -1,10 +1,13 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
 import React from 'react';
 import './App.css';
 import FormInitGame from './components/FormInitGame.jsx';
 import BoardGame from './components/BoardGame.jsx';
 import MinesweeperLogic from './MinesweeperLogic';
 
-// const dictGameProcessStates = ['no-game', 'playing', 'win', 'lose'];
+// TODO: Добавить управление по стрелочкам в 4 направления, от ячейки с фокусом
+// TODO: Добавить функцию ИИ авто-прохождения или частичного (только открытие безопасных, либо только флажки)
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -12,17 +15,21 @@ class App extends React.Component {
         this.boardEl = React.createRef();
     }
 
-    handleStartNewGame = (columnsCount, rowsCount, minesCount) => {
+    updateState = () => {
+        this.setState({
+            gameProcessState: this.game.gameState,
+            closedField: this.game.closedField,
+        });
+    };
+
+    _handleStartNewGame = (columnsCount, rowsCount, minesCount) => {
         this.game = new MinesweeperLogic(columnsCount, rowsCount, minesCount);
         this.game.init();
 
         document.documentElement.style.setProperty('--x', columnsCount);
         document.documentElement.style.setProperty('--y', rowsCount);
 
-        this.setState({
-            gameProcessState: 'playing',
-            closedField: this.game.closedField,
-        });
+        this.updateState();
     };
 
     _openCell = (x, y) => {
@@ -32,28 +39,17 @@ class App extends React.Component {
         console.log('end STEP', Date.now() - start);
         console.log(this.game.gameState);
 
-        this.setState({
-            gameProcessState: this.game.gameState,
-            closedField: this.game.closedField,
-        });
+        this.updateState();
     };
 
     _markFlag = (x, y) => {
         this.game.markMine(Number(x), Number(y));
-
-        this.setState({
-            gameProcessState: this.game.gameState,
-            closedField: this.game.closedField,
-        });
+        this.updateState();
     };
 
     _openSafeArea8 = (x, y) => {
         this.game.ifSafeSpaceOpenArea8(Number(x), Number(y));
-
-        this.setState({
-            gameProcessState: this.game.gameState,
-            closedField: this.game.closedField,
-        });
+        this.updateState();
     };
 
     handleClick = (event) => {
@@ -108,14 +104,38 @@ class App extends React.Component {
             onContextMenu: this.handleContextMenu,
             onMouseDown: this.handleMouseDown,
         };
+        const mapGameStateToView = {
+            win: (
+                <span>
+                    . <span className="messageWin">All opened right! You win!🏆</span>
+                </span>
+            ),
+            lose: (
+                <span>
+                    . <span className="messageLose">BOOM! Game Over! ☠️</span>
+                </span>
+            ),
+            playing: null,
+        };
         return (
             <div
                 className="App"
                 onContextMenu={(e) => e.preventDefault()}
                 onDoubleClick={(e) => e.preventDefault()}
             >
-                <FormInitGame handleStartNewGame={this.handleStartNewGame} />
-
+                <FormInitGame handleStartNewGame={this._handleStartNewGame} />
+                {gameProcessState === 'no-game' ? null : (
+                    <div className="message">
+                        <span
+                            className={`messageFlags ${
+                                this.game.leftFlags === 0 ? 'messageFlagsZero' : null
+                            }`}
+                        >
+                            Flags: {this.game.leftFlags} </span>
+                        of {this.game.mines}
+                        {mapGameStateToView[gameProcessState]}
+                    </div>
+                )}
                 {gameProcessState === 'no-game' ? null : (
                     <BoardGame
                         closedField={closedField}

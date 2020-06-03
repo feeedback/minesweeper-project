@@ -108,6 +108,7 @@ class Minesweeper {
         this.field = this._initFieldAndFillValue(mapDefinitionToSymbol.ZERO_MINES_NEARBY);
         this._initMines();
         this._calculateMinesAndSetCounterValues();
+        this.gameState = 'playing';
     }
 
     _markAllWrongFlag() {
@@ -193,35 +194,12 @@ class Minesweeper {
         }
 
         // if cell value - ZERO
-        // const cells = [{ x, y }];
         if (this.field[y][x] === mapDefinitionToSymbol.ZERO_MINES_NEARBY) {
             const area8Closed = this._getArea8Closed(x, y);
-            // cells.push(...area8Closed);
-            // for (const { x: areaX, y: areaY } of area8Closed) {
-            //     // console.log(areaX, areaY);
-            //     this.stepToOpenCell(areaX, areaY);
-            // }
-            const [nonPlayingAnswer] = area8Closed
-                .map(({ x: areaX, y: areaY }) => this.stepToOpenCell(areaX, areaY))
-                .filter((answer) => answer !== 'playing');
-
-            if (nonPlayingAnswer) {
-                this.gameState = nonPlayingAnswer;
+            for (const { x: areaX, y: areaY } of area8Closed) {
+                this.stepToOpenCell(areaX, areaY);
             }
         }
-
-        // while (cells.length !== 0) {
-        //     const { x: zeroX, y: zeroY } = cells.shift();
-        //     this.closedField[zeroY][zeroX] = this.field[zeroY][zeroX];
-
-        //     const area8Closed = this._getArea8Closed(zeroX, zeroY);
-        //     for (const { x, y } of area8Closed) {
-        //         return this.stepToOpenCell(x, y);
-        //     }
-        // }
-        // if (this.field[y][x] === mapDefinitionToSymbol.ZERO_MINES_NEARBY) {
-        //     return this._zeroOpen(x, y);
-        // }
     }
 
     markMine(x, y) {
@@ -255,12 +233,9 @@ class Minesweeper {
             areaClosed.length &&
             cellValue === areaFlagged.length
         ) {
-            const [nonPlayingAnswer] = areaClosed
-                .map(({ x, y }) => this.stepToOpenCell(x, y))
-                .filter((answer) => answer !== 'playing');
-
-            if (nonPlayingAnswer) {
-                this.gameState = nonPlayingAnswer;
+            const area8Closed = this._getArea8Closed(x, y);
+            for (const { x: areaX, y: areaY } of area8Closed) {
+                this.stepToOpenCell(areaX, areaY);
             }
         }
     }

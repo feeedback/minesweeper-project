@@ -6,10 +6,6 @@
 }
 
 .fieldContainer {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
     display: grid;
     grid-template-columns: repeat(
         var(--x),
@@ -17,7 +13,7 @@
             var(--min-w),
             min(
                 var(--max-w),
-                min(calc((85vw) / var(--x)), calc((96vh - 45px) / var(--y)))
+                min(calc((85vw) / var(--x)), calc((95vh - 65px) / var(--y)))
             )
         )
     );
@@ -27,7 +23,7 @@
             var(--min-w),
             min(
                 var(--max-w),
-                min(calc((85vw) / var(--x)), calc((96vh - 45px) / var(--y)))
+                min(calc((85vw) / var(--x)), calc((95vh - 65px) / var(--y)))
             )
         )
     );
@@ -72,7 +68,7 @@
                                 var(--max-w),
                                 min(
                                     calc((85vw) / var(--x)),
-                                    calc((96vh - 45px) / var(--y))
+                                    calc((95vh - 65px) / var(--y))
                                 )
                             )
                         )
@@ -131,7 +127,7 @@
     opacity: 40%;
     font-size: 90%;
     font-weight: normal;
-    line-height: 150%;
+    line-height: 140%;
 }
 .empty {
     cursor: auto;

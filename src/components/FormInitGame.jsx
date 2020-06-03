@@ -7,7 +7,7 @@ class FormInitGame extends React.PureComponent {
         this.state = {
             columnsCount: 9,
             rowsCount: 9,
-            minesCount: 9,
+            minesCount: 10,
         };
     }
     
@@ -41,7 +41,7 @@ class FormInitGame extends React.PureComponent {
                         name="columnsCount"
                         className="fieldColumnsCount"
                         min="2"
-                        max="99"
+                        max="70"
                         value={columnsCount}
                         onChange={this.handleChange}
                         required
@@ -54,7 +54,7 @@ class FormInitGame extends React.PureComponent {
                         name="rowsCount"
                         className="fieldRowsCount"
                         min="2"
-                        max="99"
+                        max="64"
                         value={rowsCount}
                         onChange={this.handleChange}
                         required
