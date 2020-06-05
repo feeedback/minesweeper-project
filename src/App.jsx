@@ -11,7 +11,11 @@ import MinesweeperLogic from './MinesweeperLogic';
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { gameProcessState: 'no-game', closedField: [] };
+        this.state = {
+            gameProcessState: 'no-game',
+            closedField: [],
+            // activeCell: { x: 0, y: 0 },
+        };
         this.boardEl = React.createRef();
     }
 
@@ -50,7 +54,49 @@ class App extends React.Component {
         const { x, y } = target.dataset;
         this.game.stepToOpenCell(Number(x), Number(y));
         this._updateState();
+        // this.setState({ activeCell: { x, y } });
     };
+
+    // componentDidUpdate(prevProps) {
+    //     const {
+    //         activeCell: { x: currentX, y: currentY },
+    //         closedField,
+    //     } = this.state;        
+    //     const { x: maxX, y: maxY } = this.game;
+    //     // const nextCell = target.parentElement.children[x + y * maxX];        
+    //     // if (closedField[y][x] === this.game.mapDefinitionToSymbol.ZERO_MINES_NEARBY){}
+    //     // while (
+    //     //     closedField[y][x] === this.game.mapDefinitionToSymbol.ZERO_MINES_NEARBY &&
+    //     //     currentCellEl.nextElementSibling
+    //     // ) {
+    //     //     currentCellEl = currentCellEl.nextElementSibling;
+    //     // }
+    //     // while (currentCellEl.disabled && currentCellEl.previousElementSibling) {
+    //     //     currentCellEl = currentCellEl.previousElementSibling;
+    //     // }
+    //     const mapKeyToMoveDirection = {
+    //         ArrowUp: (x, y) => [x, y - 1],
+    //         ArrowDown: (x, y) => [x, y + 1],
+    //         ArrowLeft: (x, y) => [x - 1, y],
+    //         ArrowRight: (x, y) => [x + 1, y],
+    //     };
+    //     const move = (x, y, count = 0) => {
+    //         if (count > Math.max(maxX, maxY)) {
+    //             return;
+    //         }
+    //         const [nextX, nextY] = mapKeyToMoveDirection[key](Number(x), Number(y));
+    //         if (nextX < 0 || nextX >= maxX || nextY < 0 || nextY >= maxY) {
+    //             return;
+    //         }
+    //         const nextCell = target.parentElement.children[nextX + nextY * maxX];
+    //         if (nextCell.disabled) {
+    //             return move(nextX, nextY, count + 1);
+    //         }
+    //         nextCell.focus();
+    //     };
+    //     move(currentX, currentY);
+    //     currentCellEl.focus();
+    // }
 
     handleContextMenu = (event) => {
         event.preventDefault();
@@ -75,6 +121,39 @@ class App extends React.Component {
         this._updateState();
     };
 
+    onKeyDown = (event) => {
+        console.log(event.target);
+        console.log(document.activeElement);
+        const { target, key } = event;
+        const { x: maxX, y: maxY } = this.game;
+        const { x: currentX, y: currentY } = target.dataset;
+
+        const mapKeyToMoveDirection = {
+            ArrowUp: (x, y) => [x, y - 1],
+            ArrowDown: (x, y) => [x, y + 1],
+            ArrowLeft: (x, y) => [x - 1, y],
+            ArrowRight: (x, y) => [x + 1, y],
+        };
+        if (!Object.keys(mapKeyToMoveDirection).includes(key)) {
+            return;
+        }
+        const move = (x, y, count = 0) => {
+            if (count > Math.max(maxX, maxY)) {
+                return;
+            }
+            const [nextX, nextY] = mapKeyToMoveDirection[key](Number(x), Number(y));
+            if (nextX < 0 || nextX >= maxX || nextY < 0 || nextY >= maxY) {
+                return;
+            }
+            const nextCell = target.parentElement.children[nextX + nextY * maxX];
+            if (nextCell.disabled) {
+                return move(nextX, nextY, count + 1);
+            }
+            nextCell.focus();
+        };
+        move(currentX, currentY);
+    };
+
     renderGameStatusMessage() {
         const mapStateToFinishToMessage = {
             win: <span className="messageWin">All opened right! You win!🏆</span>,
@@ -84,7 +163,7 @@ class App extends React.Component {
         const { gameProcessState } = this.state;
         const flagsClass =
             this.game.leftFlags === 0 ? 'messageFlags messageFlagsZero' : 'messageFlags';
-        
+
         return (
             <div className="message">
                 <span className={flagsClass}>Flags: {this.game.leftFlags} </span>
@@ -99,6 +178,7 @@ class App extends React.Component {
             onClick: this.handleClick,
             onContextMenu: this.handleContextMenu,
             onMouseDown: this.handleMouseDown,
+            onKeyDown: this.onKeyDown,
         };
 
         const fieldIsDisable = closedField.map((row) =>
