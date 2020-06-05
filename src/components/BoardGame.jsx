@@ -12,9 +12,9 @@ const mapCellValueToText = {
     7: '7',
     8: '8',
 
-    C: '', // '?',  closed cell
     M: '💣', // mine
     ME: '💣', // mine explosion
+    C: '', // '?',  closed cell
     F: '🚩', //  🏴⚑🚩flagged cell
     FW: '✕', // ✕✖❌wrong flagged cell
 };
@@ -36,37 +36,30 @@ const mapCellValueToClassName = {
     FW: 'flaggedWrong',
 };
 
-class BoardGame extends React.Component {
-    render() {
-        const { closedField, gameProcessState, boardHandles } = this.props;
+const BoardGame = ({ closedField, gameProcessState, boardHandles }) => {
+    return (
+        <div className="fieldContainer" {...boardHandles}>
+            {closedField.map((row, y) =>
+                row.map((cell, x) => {
+                    const isDisabled =
+                        gameProcessState !== 'playing' ||
+                        mapCellValueToClassName[cell].includes('empty');
 
-        return (
-            <div
-                className="fieldContainer"
-                {...boardHandles}
-            >
-                {closedField.map((row, y) =>
-                    row.map((cell, x) => {
-                        const isDisabled =
-                            gameProcessState !== 'playing' ||
-                            mapCellValueToClassName[cell].includes('empty');
-
-                        return (
-                            <button
-                                key={`Cell__${x}_${y}`}
-                                data-x={x}
-                                data-y={y}
-                                className={`Cell ${mapCellValueToClassName[cell]}`}
-                                disabled={isDisabled}
-                            >
-                                {mapCellValueToText[cell]}
-                            </button>
-                        );
-                    })
-                )}
-            </div>
-        );
-    }
-}
+                    return (
+                        <button
+                            key={`Cell__${x}_${y}`}
+                            data-x={x}
+                            data-y={y}
+                            className={`Cell ${mapCellValueToClassName[cell]}`}
+                            disabled={isDisabled}
+                        >
+                            {mapCellValueToText[cell]}
+                        </button>
+                    );
+                })
+            )}
+        </div>
+    );
+};
 
 export default BoardGame;
