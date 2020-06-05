@@ -30,7 +30,7 @@
     box-sizing: border-box;
 }
 
-/* hack for square cell (1/1 ratio) */
+/* for square cell (1/1 ratio) */
 .fieldContainer::before {
     content: '';
     width: 0;
@@ -44,7 +44,7 @@
     grid-row: 1 / 1;
     grid-column: 1 / 1;
 }
-/* [end] hack for square cell (1/1 ratio) */
+/* [end] for square cell (1/1 ratio) */
 
 .Cell {
     -webkit-appearance: none;
@@ -108,7 +108,8 @@
     bottom: 0px;
     margin: auto;
     z-index: -1;
-    opacity: 40%;
+    color:  rgba(0, 0, 0, 0.4);
+    /* opacity: 40%; */
     font-size: 90%;
     font-weight: normal;
     line-height: 140%;
