@@ -36,27 +36,21 @@ const mapCellValueToClassName = {
     FW: 'flaggedWrong',
 };
 
-const BoardGame = ({ closedField, gameProcessState, boardHandles }) => {
+const BoardGame = ({ closedField, fieldIsDisable, boardHandles }) => {
     return (
         <div className="fieldContainer" {...boardHandles}>
             {closedField.map((row, y) =>
-                row.map((cell, x) => {
-                    const isDisabled =
-                        gameProcessState !== 'playing' ||
-                        mapCellValueToClassName[cell].includes('empty');
-
-                    return (
-                        <button
-                            key={`Cell__${x}_${y}`}
-                            data-x={x}
-                            data-y={y}
-                            className={`Cell ${mapCellValueToClassName[cell]}`}
-                            disabled={isDisabled}
-                        >
-                            {mapCellValueToText[cell]}
-                        </button>
-                    );
-                })
+                row.map((cell, x) => (
+                    <button
+                        key={`Cell__${x}_${y}`}
+                        data-x={x}
+                        data-y={y}
+                        className={`Cell ${mapCellValueToClassName[cell]}`}
+                        disabled={fieldIsDisable[y][x]}
+                    >
+                        {mapCellValueToText[cell]}
+                    </button>
+                ))
             )}
         </div>
     );

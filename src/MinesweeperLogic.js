@@ -34,6 +34,7 @@ class Minesweeper {
         this.leftClosed = x * y;
 
         this.gameState = 'playing';
+        this.mapDefinitionToSymbol = mapDefinitionToSymbol;
     }
 
     _initMines() {
@@ -47,7 +48,6 @@ class Minesweeper {
                 tailMines -= 1;
             }
         }
-        return true;
     }
 
     _getArea8(cellX, cellY) {
@@ -123,6 +123,7 @@ class Minesweeper {
             })
         );
     }
+
     _markAllTailClosedFlag() {
         this.closedField.forEach((row, y) =>
             row.forEach((closedCellValue, x) => {
@@ -135,6 +136,7 @@ class Minesweeper {
             })
         );
     }
+
     _showAllClosedMine() {
         this.closedField.forEach((row, y) =>
             row.forEach((closedCellValue, x) => {
@@ -148,22 +150,8 @@ class Minesweeper {
         );
     }
 
-    // _zeroOpen(zeroX, zeroY) {
-    //     const area8Closed = this._getArea8Closed(zeroX, zeroY);
-    //     for (const { x, y } of area8Closed) {
-    //         return this.stepToOpenCell(x, y);
-    //     }
-    //     return true;
-    // }
-    _openCell(x, y) {
-        this.leftClosed -= 1;
-        this.closedField[y][x] = this.field[y][x];
-        // open cell
-        return true;
-    }
-
     _exitLoseExplosion(x, y) {
-        console.log('💣Explosion💣! GAME OVER');
+        // console.log('💣Explosion💣! GAME OVER');
         this.closedField[y][x] = mapDefinitionToSymbol.MINE_EXPLOSION;
         this._markAllWrongFlag();
         this._showAllClosedMine();
@@ -172,15 +160,19 @@ class Minesweeper {
 
     _exitWinAllOpened() {
         this._markAllTailClosedFlag();
-        console.log('All opened!  You win!🏆');
+        // console.log('All opened!  You win!🏆');
         this.gameState = 'win';
+    }
+
+    _openCell(x, y) {
+        this.leftClosed -= 1;
+        this.closedField[y][x] = this.field[y][x];
     }
 
     stepToOpenCell(x, y) {
         if (this.closedField[y][x] !== mapDefinitionToSymbol.CELL_CLOSED) {
-            return false;
+            return;
         }
-        // console.log('step: ', x, y);
 
         this._openCell(x, y);
 
@@ -188,12 +180,11 @@ class Minesweeper {
             return this._exitLoseExplosion(x, y);
         }
 
+        // остались закрытыми только мины
         if (this.leftClosed === this.leftFlags) {
-            console.log('leftClosed', this.leftClosed, ', leftFlags ', this.leftFlags);
             return this._exitWinAllOpened();
         }
 
-        // if cell value - ZERO
         if (this.field[y][x] === mapDefinitionToSymbol.ZERO_MINES_NEARBY) {
             const area8Closed = this._getArea8Closed(x, y);
             for (const { x: areaX, y: areaY } of area8Closed) {
@@ -202,39 +193,46 @@ class Minesweeper {
         }
     }
 
-    markMine(x, y) {
+    _setFlag(x, y) {
+        this.leftFlags -= 1;
+        this.leftClosed -= 1;
+        this.closedField[y][x] = mapDefinitionToSymbol.FLAG;
+        // console.log('FLAG THE MINE 🚩', x, y);
+    }
+
+    _removeFlag(x, y) {
+        this.leftFlags += 1;
+        this.leftClosed += 1;
+        this.closedField[y][x] = mapDefinitionToSymbol.CELL_CLOSED;
+        // console.log('DELETE FLAG X🚩', x, y);
+    }
+
+    setOrRemoveFlag(x, y) {
         if (
             this.closedField[y][x] === mapDefinitionToSymbol.CELL_CLOSED &&
-            this.leftFlags
+            this.leftFlags > 0
         ) {
-            this.leftFlags -= 1;
-            this.leftClosed -= 1;
-            this.closedField[y][x] = mapDefinitionToSymbol.FLAG;
-            console.log('FLAG THE MINE 🚩', x, y);
+            this._setFlag(x, y);
         } else if (this.closedField[y][x] === mapDefinitionToSymbol.FLAG) {
-            this.leftFlags += 1;
-            this.leftClosed += 1;
-            this.closedField[y][x] = mapDefinitionToSymbol.CELL_CLOSED;
-            console.log('DELETE FLAG X🚩', x, y);
+            this._removeFlag(x, y);
         }
     }
 
     ifSafeSpaceOpenArea8(x, y) {
-        console.log('_checkIsThisSafeCell', x, y);
-
+        // console.log('_checkIsThisSafeCell', x, y);
+        const cellValue = this.closedField[y][x];
+        if (
+            !Number.isInteger(cellValue) ||
+            cellValue === mapDefinitionToSymbol.ZERO_MINES_NEARBY
+        ) {
+            return;
+        }
         const area8 = this._getArea8(x, y);
         const areaFlagged = this._getArea8Flagged(x, y, area8);
         const areaClosed = this._getArea8Closed(x, y, area8);
-        const cellValue = this.closedField[y][x];
 
-        if (
-            Number.isInteger(cellValue) &&
-            cellValue !== mapDefinitionToSymbol.ZERO_MINES_NEARBY &&
-            areaClosed.length &&
-            cellValue === areaFlagged.length
-        ) {
-            const area8Closed = this._getArea8Closed(x, y);
-            for (const { x: areaX, y: areaY } of area8Closed) {
+        if (cellValue === areaFlagged.length) {
+            for (const { x: areaX, y: areaY } of areaClosed) {
                 this.stepToOpenCell(areaX, areaY);
             }
         }

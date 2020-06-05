@@ -15,7 +15,7 @@ class App extends React.Component {
         this.boardEl = React.createRef();
     }
 
-    updateState = () => {
+    _updateState = () => {
         this.setState({
             gameProcessState: this.game.gameState,
             closedField: this.game.closedField,
@@ -29,31 +29,12 @@ class App extends React.Component {
         document.documentElement.style.setProperty('--x', columnsCount);
         document.documentElement.style.setProperty('--y', rowsCount);
 
-        this.updateState();
-    };
-
-    _openCell = (x, y) => {
-        const start = Date.now();
-        console.log('start', 0);
-        this.game.stepToOpenCell(Number(x), Number(y));
-        console.log('end STEP', Date.now() - start);
-        console.log(this.game.gameState);
-
-        this.updateState();
-    };
-
-    _markFlag = (x, y) => {
-        this.game.markMine(Number(x), Number(y));
-        this.updateState();
-    };
-
-    _openSafeArea8 = (x, y) => {
-        this.game.ifSafeSpaceOpenArea8(Number(x), Number(y));
-        this.updateState();
+        this._updateState();
     };
 
     handleClick = (event) => {
         const { target } = event;
+
         if (!target.classList.contains('Cell')) {
             return false;
         }
@@ -65,37 +46,52 @@ class App extends React.Component {
         if (event.shiftKey) {
             return this.handleMouseDown(event);
         }
-        if (
-            target.classList.contains('closed') &&
-            !target.classList.contains('flagged')
-        ) {
-            const { x, y } = target.dataset;
-            this._openCell(x, y);
-        }
+
+        const { x, y } = target.dataset;
+        this.game.stepToOpenCell(Number(x), Number(y));
+        this._updateState();
     };
 
     handleContextMenu = (event) => {
         event.preventDefault();
         const { target } = event;
+
         if (!target.classList.contains('Cell')) {
             return false;
         }
 
-        if (target.classList.contains('closed')) {
-            const { x, y } = target.dataset;
-            this._markFlag(x, y);
-        }
+        const { x, y } = target.dataset;
+        this.game.setOrRemoveFlag(Number(x), Number(y));
+        this._updateState();
     };
 
     handleMouseDown = ({ target, button }) => {
         if (!target.classList.contains('Cell') || button !== 0) {
-            return false;
+            return;
         }
-        if (!target.classList.contains('closed') && !target.classList.contains('empty')) {
-            const { x, y } = target.dataset;
-            this._openSafeArea8(x, y);
-        }
+
+        const { x, y } = target.dataset;
+        this.game.ifSafeSpaceOpenArea8(Number(x), Number(y));
+        this._updateState();
     };
+
+    renderGameStatusMessage() {
+        const mapStateToFinishToMessage = {
+            win: <span className="messageWin">All opened right! You win!🏆</span>,
+            lose: <span className="messageLose">BOOM! Game Over! ☠️</span>,
+            playing: null,
+        };
+        const { gameProcessState } = this.state;
+        const flagsClass =
+            this.game.leftFlags === 0 ? 'messageFlags messageFlagsZero' : 'messageFlags';
+        
+        return (
+            <div className="message">
+                <span className={flagsClass}>Flags: {this.game.leftFlags} </span>
+                of {this.game.mines}. {mapStateToFinishToMessage[gameProcessState]}
+            </div>
+        );
+    }
 
     render() {
         const { gameProcessState, closedField } = this.state;
@@ -104,44 +100,28 @@ class App extends React.Component {
             onContextMenu: this.handleContextMenu,
             onMouseDown: this.handleMouseDown,
         };
-        const mapGameStateToView = {
-            win: (
-                <span>
-                    . <span className="messageWin">All opened right! You win!🏆</span>
-                </span>
-            ),
-            lose: (
-                <span>
-                    . <span className="messageLose">BOOM! Game Over! ☠️</span>
-                </span>
-            ),
-            playing: null,
-        };
+
+        const fieldIsDisable = closedField.map((row) =>
+            row.map(
+                (cell) =>
+                    gameProcessState !== 'playing' ||
+                    cell === this.game.mapDefinitionToSymbol.ZERO_MINES_NEARBY
+            )
+        );
+
         return (
-            <div
-                className="App"
-                onContextMenu={(e) => e.preventDefault()}
-                onDoubleClick={(e) => e.preventDefault()}
-            >
+            <div className="App" onContextMenu={(e) => e.preventDefault()}>
                 <FormInitGame handleStartNewGame={this._handleStartNewGame} />
+
                 {gameProcessState === 'no-game' ? null : (
-                    <div className="message">
-                        <span
-                            className={`messageFlags ${
-                                this.game.leftFlags === 0 ? 'messageFlagsZero' : null
-                            }`}
-                        >
-                            Flags: {this.game.leftFlags} </span>
-                        of {this.game.mines}
-                        {mapGameStateToView[gameProcessState]}
-                    </div>
-                )}
-                {gameProcessState === 'no-game' ? null : (
-                    <BoardGame
-                        closedField={closedField}
-                        gameProcessState={gameProcessState}
-                        boardHandles={boardHandles}
-                    />
+                    <>
+                        {this.renderGameStatusMessage()}
+                        <BoardGame
+                            closedField={closedField}
+                            fieldIsDisable={fieldIsDisable}
+                            boardHandles={boardHandles}
+                        />
+                    </>
                 )}
             </div>
         );
