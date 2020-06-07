@@ -4,8 +4,6 @@ import './App.css';
 import FormInitGame from './components/FormInitGame.jsx';
 import BoardGame from './components/BoardGame.jsx';
 import MinesweeperLogic from './MinesweeperLogic';
-
-// TODO: Добавить фокус на ближайшую ячейку после открытия поля 0 и потери фокуса из-за disabled
 // TODO: Добавить функцию ИИ авто-прохождения или частичного (только открытие безопасных, либо только флажки)
 
 class App extends React.Component {
