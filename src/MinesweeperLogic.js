@@ -187,10 +187,9 @@ class Minesweeper {
 
         if (this.field[y][x] === mapDefinitionToSymbol.ZERO_MINES_NEARBY) {
             const area8Closed = this._getArea8Closed(x, y);
-            area8Closed.forEach(({ x: areaX, y: areaY }) =>
-                this.stepToOpenCell(areaX, areaY)
-            );
-            this.openZeroArea = 'playing';
+            for (const { x: areaX, y: areaY } of area8Closed) {
+                this.stepToOpenCell(areaX, areaY);
+            }
         }
     }
 
