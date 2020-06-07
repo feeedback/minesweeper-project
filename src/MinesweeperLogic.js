@@ -187,9 +187,10 @@ class Minesweeper {
 
         if (this.field[y][x] === mapDefinitionToSymbol.ZERO_MINES_NEARBY) {
             const area8Closed = this._getArea8Closed(x, y);
-            for (const { x: areaX, y: areaY } of area8Closed) {
-                this.stepToOpenCell(areaX, areaY);
-            }
+            area8Closed.forEach(({ x: areaX, y: areaY }) =>
+                this.stepToOpenCell(areaX, areaY)
+            );
+            this.openZeroArea = 'playing';
         }
     }
 
@@ -236,6 +237,34 @@ class Minesweeper {
                 this.stepToOpenCell(areaX, areaY);
             }
         }
+    }
+    getNearestNotZeroCell(currentX, currentY) {
+        if (
+            this.closedField[currentY][currentX] !==
+            mapDefinitionToSymbol.ZERO_MINES_NEARBY
+        ) {
+            return null;
+        }
+
+        const notZeroCellsWithDistance = [];
+        const getDistance = (x, y) =>
+            Math.sqrt((x - currentX) ** 2 + (y - currentY) ** 2);
+
+        this.closedField.forEach((row, y) =>
+            row.forEach((cellValue, x) => {
+                if (cellValue !== mapDefinitionToSymbol.ZERO_MINES_NEARBY) {
+                    notZeroCellsWithDistance.push({ x, y, distance: getDistance(x, y) });
+                }
+            })
+        );
+        if (notZeroCellsWithDistance.length === 0) {
+            return null;
+        }
+
+        const [nearestCell] = notZeroCellsWithDistance.sort(
+            (a, b) => a.distance - b.distance
+        );
+        return nearestCell;
     }
 }
 
