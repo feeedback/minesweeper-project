@@ -70,8 +70,7 @@ class App extends React.Component {
         }
         document
             .querySelector('.fieldContainer')
-            .children[nextCell.x + nextCell.y * this.game.x]
-            .focus();
+            .children[nextCell.x + nextCell.y * this.game.x].focus();
     }
 
     handleContextMenu = (event) => {
@@ -84,7 +83,11 @@ class App extends React.Component {
 
         const { x, y } = target.dataset;
         this.game.setOrRemoveFlag(Number(x), Number(y));
-        this._updateState();
+        this.setState({
+            gameProcessState: this.game.gameState,
+            closedField: this.game.closedField,
+            activeCell: { x, y },
+        });
     };
 
     handleMouseDown = ({ target, button }) => {
