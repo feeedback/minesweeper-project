@@ -2,9 +2,9 @@
     --x: 9;
     --y: 9;
     --min-w-cell: 20px;
-    --max-w-cell: 40px;
+    --max-w-cell: 64px;
 
-    --max-w-field: 85vw;
+    --max-w-field: 90vw;
     --max-h-field: calc(95vh - 65px);
     --minmax-wh-field: min(
         var(--max-w-cell),
