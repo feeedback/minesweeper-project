@@ -66,9 +66,9 @@ class App extends React.Component {
 
         const nextCell = this.game.getNearestNotZeroCell(x, y);
         if (nextCell === null) {
-            document
-                .querySelector('.fieldContainer')
-                .children[x + y * this.game.x].focus();
+            if (this.game.leftClosed === this.game.x * this.game.y) {
+                document.querySelector('.fieldContainer').children[0].focus();
+            }
             return;
         }
         document
