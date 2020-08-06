@@ -10,7 +10,7 @@ class FormInitGame extends React.PureComponent {
             minesCount: 10,
         };
     }
-    
+
     handleChange = ({ target: { name, value } }) => {
         this.setState({ [name]: value });
     };
@@ -18,10 +18,18 @@ class FormInitGame extends React.PureComponent {
     handleSubmitStartNewGame = (event) => {
         event.preventDefault();
         const { columnsCount, rowsCount, minesCount } = this.state;
-        
+
         const { handleStartNewGame } = this.props;
         handleStartNewGame(Number(columnsCount), Number(rowsCount), Number(minesCount));
     };
+
+    componentDidMount() {
+        // create default game field when page loaded
+        const { columnsCount, rowsCount, minesCount } = this.state;
+
+        const { handleStartNewGame } = this.props;
+        handleStartNewGame(Number(columnsCount), Number(rowsCount), Number(minesCount));
+    }
 
     render() {
         const { columnsCount, rowsCount, minesCount } = this.state;
