@@ -31,7 +31,7 @@
 }
 
 /* for square cell (1/1 ratio) */
-.fieldContainer::before {
+/* .fieldContainer::before {
     content: '';
     width: 0;
     padding-bottom: 100%;
@@ -43,7 +43,7 @@
 .fieldContainer > *:first-child {
     grid-row: 1 / 1;
     grid-column: 1 / 1;
-}
+} */
 /* [end] for square cell (1/1 ratio) */
 
 .Cell {
@@ -65,6 +65,12 @@
     background-color: #cecab7;
     color: black;
     cursor: pointer;
+
+    -webkit-aspect-ratio: 1 / 1;
+    -moz-aspect-ratio: 1 / 1;
+    -ms-aspect-ratio: 1 / 1;
+    -o-aspect-ratio: 1 / 1;
+    aspect-ratio: 1 / 1;
 }
 
 .Cell:disabled {
@@ -108,7 +114,7 @@
     bottom: 0px;
     margin: auto;
     z-index: -1;
-    color:  rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 0.4);
     /* opacity: 40%; */
     font-size: 90%;
     font-weight: normal;
