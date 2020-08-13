@@ -35,6 +35,23 @@ const mapCellValueToClassName = {
     F: 'closed flagged',
     FW: 'flaggedWrong',
 };
+const mapCellValueToLabel = {
+    0: 'empty',
+    1: '1',
+    2: '2',
+    3: '3',
+    4: '4',
+    5: '5',
+    6: '6',
+    7: '7',
+    8: '8',
+
+    M: 'mine',
+    ME: 'explosion mine',
+    C: 'closed',
+    F: 'flagged',
+    FW: 'wrong flagged',
+};
 
 const BoardGame = ({ closedField, fieldIsDisable, boardHandles }) => {
     return (
@@ -47,6 +64,7 @@ const BoardGame = ({ closedField, fieldIsDisable, boardHandles }) => {
                         data-y={y}
                         className={`Cell ${mapCellValueToClassName[cell]}`}
                         disabled={fieldIsDisable[y][x]}
+                        aria-label={mapCellValueToLabel[cell]}
                     >
                         {mapCellValueToText[cell]}
                     </button>
