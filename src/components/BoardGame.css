@@ -78,6 +78,12 @@
     cursor: auto;
 }
 
+.Cell:focus {
+    outline: black solid 2px;
+    outline-offset: -1px;
+    z-index: 0;
+}
+
 .closed {
     border: 2px solid;
     border-color: #f5f3eb #bab7a9 #bab7a9 #fff9db;
