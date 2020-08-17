@@ -22,6 +22,7 @@
         var(--y),
         minmax(var(--min-w-cell), var(--minmax-wh-field))
     );
+
     justify-content: stretch;
 
     background-color: #cecab7;
@@ -31,7 +32,7 @@
 }
 
 /* for square cell (1/1 ratio) */
-/* .fieldContainer::before {
+.fieldContainer::before {
     content: '';
     width: 0;
     padding-bottom: 100%;
@@ -43,7 +44,7 @@
 .fieldContainer > *:first-child {
     grid-row: 1 / 1;
     grid-column: 1 / 1;
-} */
+}
 /* [end] for square cell (1/1 ratio) */
 
 .Cell {
@@ -55,7 +56,8 @@
     padding: 0;
     text-align: center;
 
-    font-size: calc((max(var(--min-w-cell), var(--minmax-wh-field)) - 2px) * 0.75);
+    --cell-height: calc(max(var(--min-w-cell), var(--minmax-wh-field)) - 2px);
+    font-size: calc(var(--cell-height) * 0.7);
 
     font-family: 'Roboto Mono', monospace;
     font-weight: bold;
@@ -72,7 +74,21 @@
     -o-aspect-ratio: 1 / 1;
     aspect-ratio: 1 / 1;
 }
-
+@supports not ((width: min(100px, 200px)) or (width: max(100px, 200px))) {
+    /* test clamp() - its analog calc(min(), ...) for Firefox Mobile */
+    :root {
+        --min-w-cell: 28px;
+        --max-w-cell: 28px;
+    }
+    .fieldContainer {
+        grid-template-columns: repeat(var(--x), var(--min-w-cell));
+        grid-template-rows: repeat(var(--y), var(--min-w-cell));
+    }
+    .Cell {
+        --cell-height: calc(var(--min-w-cell) - 2px);
+        font-size: calc(var(--cell-height) * 0.75);
+    }
+}
 .Cell:disabled {
     -webkit-appearance: none;
     cursor: auto;
