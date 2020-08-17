@@ -36,7 +36,6 @@ class App extends React.Component {
 
     handleClick = (event) => {
         const { target } = event;
-
         if (!target.classList.contains('Cell')) {
             return false;
         }
@@ -45,12 +44,14 @@ class App extends React.Component {
             return this.handleContextMenu(event);
         }
         // Shift + Space for open Safe Area8 on keyboard
-        if (event.shiftKey) {
-            return this.handleMouseDown(event);
-        }
 
         const { x, y } = target.dataset;
-        this.game.stepToOpenCell(Number(x), Number(y));
+        if (this.game.closedField[y][x] === this.game.mapDefinitionToSymbol.CELL_CLOSED) {
+            this.game.stepToOpenCell(Number(x), Number(y));
+        } else {
+            this.game.ifSafeSpaceOpenArea8(Number(x), Number(y));
+        }
+
         this.setState({
             gameProcessState: this.game.gameState,
             closedField: this.game.closedField,
@@ -91,16 +92,6 @@ class App extends React.Component {
             closedField: this.game.closedField,
             activeCell: { x, y },
         });
-    };
-
-    handleMouseDown = ({ target, button }) => {
-        if (!target.classList.contains('Cell') || button !== 0) {
-            return;
-        }
-
-        const { x, y } = target.dataset;
-        this.game.ifSafeSpaceOpenArea8(Number(x), Number(y));
-        this._updateState();
     };
 
     handleKeyDownArrow = ({ target, key }) => {
@@ -158,7 +149,6 @@ class App extends React.Component {
         const boardHandles = {
             onClick: this.handleClick,
             onContextMenu: this.handleContextMenu,
-            onMouseDown: this.handleMouseDown,
             onKeyDown: this.handleKeyDownArrow,
         };
 
