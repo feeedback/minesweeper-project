@@ -1,3 +1,7 @@
+:root {
+    font-size: 10px;
+}
+
 .App {
     text-align: center;
     min-height: 100vh;
@@ -12,27 +16,27 @@
     user-select: none;
     /* font-size: calc(10px + 1vmin); */
     font-family: 'Roboto', sans-serif;
-    font-size: 18px;
+    font-size: 1.8rem;
 }
 @media (max-width: 543px) {
     .App {
-        font-size: 16px;
+        font-size: 1.6rem;
     }
 }
 @media (max-width: 449px) {
     .App {
-        font-size: 14px;
+        font-size: 1.4rem;
     }
 }
 @media (max-width: 380px) {
     .App {
-        font-size: 13px;
+        font-size: 1.3rem;
     }
 }
 
 .message {
     line-height: 1;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
     font-size: inherit;
 }
 
@@ -50,12 +54,15 @@
     font-weight: bold;
 }
 
+.messageWin,
+.messageLose {
+    margin-left: 10px;
+    font-size: 1.2em;
+}
 .messageWin {
     color: #e76346;
-    margin-left: 10px;
 }
 
 .messageLose {
     color: #a01d00;
-    margin-left: 10px;
 }

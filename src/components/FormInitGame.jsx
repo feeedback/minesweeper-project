@@ -82,7 +82,7 @@ class FormInitGame extends React.PureComponent {
                     />
                 </label>
                 <button type="submit" className="buttonStartGame">
-                    Start game!
+                    Play
                 </button>
             </form>
         );

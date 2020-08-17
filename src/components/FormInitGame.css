@@ -11,7 +11,7 @@
     background-color: hsl(50 15% 92% / 1);
     border-radius: 0 0 1em 1em;
     margin: 0 auto;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
     padding: 3px 2em 4px 2em;
 }
 
@@ -25,8 +25,6 @@ label {
 .fieldRowsCount,
 .fieldMinesCount,
 .buttonStartGame {
-    /* font-size: calc(10px + 0.8vmin); */
-    /* margin: 0 0.3em; */
     font-weight: normal;
     color: #404040;
 }
