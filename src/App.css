@@ -10,21 +10,40 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    font-size: calc(10px + 1vmin);
+    /* font-size: calc(10px + 1vmin); */
     font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+}
+@media (max-width: 543px) {
+    .App {
+        font-size: 16px;
+    }
+}
+@media (max-width: 449px) {
+    .App {
+        font-size: 14px;
+    }
+}
+@media (max-width: 380px) {
+    .App {
+        font-size: 13px;
+    }
 }
 
 .message {
-    line-height: 100%;
-    margin-bottom: 5px;
+    line-height: 1;
+    margin-bottom: 3px;
+    font-size: inherit;
 }
 
-.messageFlags, .messageWin, .messageLose {
+.messageFlags,
+.messageWin,
+.messageLose {
     font-weight: bold;
 }
 
 .messageFlagsZero {
-    color:#c82500;
+    color: #c82500;
 }
 
 .messageFlags {
