@@ -1,6 +1,8 @@
 {
     "short_name": "Minesweeper",
-    "name": "Minesweeper game (Сапёр)",
+    "name": "Minesweeper",
+    "description": "Minesweeper game (Сапёр)",
+    "lang": "en-US",
     "icons": [
         {
             "src": "favicon.ico",
