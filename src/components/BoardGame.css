@@ -75,7 +75,7 @@
     aspect-ratio: 1 / 1;
 }
 @supports not ((width: min(100px, 200px)) or (width: max(100px, 200px))) {
-    /* test clamp() - its analog calc(min(), ...) for Firefox Mobile */
+    /* test width: min()/clamp() - its analog calc(min(), ...) for Firefox Mobile */
     :root {
         --min-w-cell: 28px;
         --max-w-cell: 28px;
