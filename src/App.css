@@ -36,8 +36,12 @@
 
 .message {
     line-height: 1;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     font-size: inherit;
+    height: 1.2em;
+    display: flex;
+    white-space: break-spaces;
+    align-items: center;
 }
 
 .messageFlags,
