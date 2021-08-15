@@ -3,7 +3,11 @@
 
 Deployed: https://feeedback.github.io/minesweeper-project/
 
-.
+Поддерживает управление с клавиатуры:
+Перемещение между клетками: стрелочками: ←, →, ↑, ↓. Также работает с помощью TAB, CTRL+TAB
+Открыть клетку: Space (или левой кнопкой мыши)
+Поставить либо убрать флажок: Ctrl+Space (или правой кнопкой мыши) по закрытой клетке
+Открыть пространство вокруг цифры: Space (или левой либо правой кнопкой мыши)
 .
 
 _This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)._
