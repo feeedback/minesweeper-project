@@ -1,18 +1,17 @@
 ### Полнофункциональная игра **"Сапёр"**.
-#### Семантическая и адаптивная вёрстка, доступный дизайн
+#### Семантическая и адаптивная вёрстка, доступный дизайн  
 
-Deployed: https://feeedback.github.io/minesweeper-project/
+Deployed: https://feeedback.github.io/minesweeper-project/  
 
 Поддерживает управление с клавиатуры:
-Перемещение между клетками: стрелочками: ←, →, ↑, ↓. Также работает с помощью TAB, CTRL+TAB
-Открыть клетку: Space (или левой кнопкой мыши)
-Поставить либо убрать флажок: Ctrl+Space (или правой кнопкой мыши) по закрытой клетке
-Открыть пространство вокруг цифры: Space (или левой либо правой кнопкой мыши)
-.
+- Перемещение между клетками: стрелочками: `←, →, ↑, ↓`. Также работает с помощью `Tab`, `Ctrl+Tab`
+- Открыть клетку: `Space` (или левой кнопкой мыши)
+- Поставить либо убрать флажок: `Ctrl+Space` (или правой кнопкой мыши) по закрытой клетке
+- Открыть пространство вокруг цифры: `Space` (или левой либо правой кнопкой мыши)  
+---
 
-_This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)._
 
-#### Available Scripts
+##### Available Scripts: (_This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)._  )
 
 **`npm start`**
 
