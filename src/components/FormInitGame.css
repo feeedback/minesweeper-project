@@ -1,23 +1,23 @@
 .formInitGameSettings {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  width: fit-content;
 
-    font-family: Roboto;
-    font-size: inherit;
+  font-family: Roboto;
+  font-size: inherit;
 
-    background-color: hsl(50 15% 92% / 1);
-    border-radius: 0 0 1em 1em;
-    margin: 0 auto;
-    margin-bottom: 18px;
-    padding: 3px 2em 4px 2em;
+  background-color: hsl(50 15% 92% / 1);
+  border-radius: 0 0 1em 1em;
+  margin: 0 auto;
+  margin-bottom: 18px;
+  padding: 3px 2em 4px 2em;
 }
 
 label {
-    font-weight: 600;
-    margin-right: 0.3em;
+  font-weight: 600;
+  margin-right: 0.3em;
 }
 
 .formInitGameSettings label,
@@ -25,35 +25,35 @@ label {
 .fieldRowsCount,
 .fieldMinesCount,
 .buttonStartGame {
-    font-weight: normal;
-    color: #404040;
+  font-weight: normal;
+  color: #404040;
 }
 
 .fieldColumnsCount,
 .fieldRowsCount,
 .fieldMinesCount {
-    width: 2.5em;
-    color: #3c3426;
+  width: 2.5em;
+  color: #3c3426;
 }
 .fieldMinesCount {
-    width: 3.5em;
+  width: 3.5em;
 }
 
 .fieldColumnsCount,
 .fieldRowsCount,
 .fieldMinesCount,
 .buttonStartGame {
-    background-color: hsl(30 13% 98% / 1);
-    border-radius: 0.5em;
-    padding: 0px 0.2em 0px 0.5em;
-    border-width: 1px;
-    border-color: hsl(49 68% 85% / 1);
-    font-family: Roboto;
-    font-size: inherit;
+  background-color: hsl(30 13% 98% / 1);
+  border-radius: 0.5em;
+  padding: 0px 0.2em 0px 0.5em;
+  border-width: 1px;
+  border-color: hsl(49 68% 85% / 1);
+  font-family: Roboto;
+  font-size: inherit;
 }
 
 .buttonStartGame {
-    padding: 0 0.6em;
-    background-color: hsl(49 69% 94%);
-    border-radius: 0.2em;
+  padding: 0 0.6em;
+  background-color: hsl(49 69% 94%);
+  border-radius: 0.2em;
 }

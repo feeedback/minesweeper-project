@@ -1,72 +1,72 @@
 :root {
-    font-size: 10px;
+  font-size: 10px;
 }
 
 .App {
-    text-align: center;
-    min-height: 100vh;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: column;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    /* font-size: calc(10px + 1vmin); */
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.8rem;
+  text-align: center;
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* font-size: calc(10px + 1vmin); */
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.8rem;
 }
 @media (max-width: 543px) {
-    .App {
-        font-size: 1.6rem;
-    }
+  .App {
+    font-size: 1.6rem;
+  }
 }
 @media (max-width: 449px) {
-    .App {
-        font-size: 1.4rem;
-    }
+  .App {
+    font-size: 1.4rem;
+  }
 }
 @media (max-width: 380px) {
-    .App {
-        font-size: 1.3rem;
-    }
+  .App {
+    font-size: 1.3rem;
+  }
 }
 
 .message {
-    line-height: 1;
-    margin-bottom: 2px;
-    font-size: inherit;
-    height: 1.2em;
-    display: flex;
-    white-space: break-spaces;
-    align-items: center;
+  line-height: 1;
+  margin-bottom: 2px;
+  font-size: inherit;
+  height: 1.2em;
+  display: flex;
+  white-space: break-spaces;
+  align-items: center;
 }
 
 .messageFlags,
 .messageWin,
 .messageLose {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .messageFlagsZero {
-    color: #c82500;
+  color: #c82500;
 }
 
 .messageFlags {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .messageWin,
 .messageLose {
-    margin-left: 10px;
-    font-size: 1.2em;
+  margin-left: 10px;
+  font-size: 1.2em;
 }
 .messageWin {
-    color: #e76346;
+  color: #e76346;
 }
 
 .messageLose {
-    color: #a01d00;
+  color: #a01d00;
 }
